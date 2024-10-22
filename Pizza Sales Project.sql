@@ -17,14 +17,14 @@ CREATE TABLE order_details (
     PRIMARY KEY (order_details_id)
 );
 
--- Retrieve the total number of orders placed.
+-- Retrieve the total number of orders placed. --
 
 SELECT 
     COUNT(order_id) AS Total_Orders
 FROM
     orders;
 
--- Calculate the total revenue generated from pizza sales.
+-- Calculate the total revenue generated from pizza sales. --
 
 SELECT 
     ROUND(SUM(order_details.quantity * pizzas.price),
@@ -34,7 +34,7 @@ FROM
         JOIN
     pizzas ON order_details.pizza_id = pizzas.pizza_id;
     
--- Identify the highest-priced pizza.
+-- Identify the highest-priced pizza. --
 
 SELECT 
     pizza_types.name, pizzas.price
@@ -44,7 +44,8 @@ FROM
     pizza_types ON pizza_types.pizza_type_id = pizzas.pizza_type_id
     order by pizzas.price desc limit 1;
 
--- Identify the most common pizza size ordered.
+-- Identify the most common pizza size ordered. --
+
 SELECT 
     pizzas.size, COUNT(order_details.quantity) AS order_count
 FROM
@@ -55,7 +56,7 @@ GROUP BY pizzas.size
 ORDER BY order_count desc
 LIMIT 1;
 
--- List the top 5 most ordered pizza types along with their quantities --
+-- List the top 5 most ordered pizza types along with their quantities. --
 
 SELECT 
     pizza_types.name,
@@ -92,7 +93,7 @@ FROM
     orders
 GROUP BY hours;
 
--- Join relevant tables to find the category-wise distribution of pizzas --
+-- Join relevant tables to find the category-wise distribution of pizzas. --
 
 SELECT 
     category, COUNT(name)
@@ -100,7 +101,7 @@ FROM
     pizza_types
 GROUP BY category;
 
--- Group the orders by date and calculate the average number of pizzas ordered per day --
+-- Group the orders by date and calculate the average number of pizzas ordered per day. --
 
 SELECT 
     ROUND(AVG(quantity), 0) AS Average_Order_Per_Day
@@ -127,7 +128,7 @@ GROUP BY pizza_types.name
 ORDER BY Revenue DESC
 LIMIT 3;
 
--- Calculate the percentage contribution of each pizza type to total revenue --
+-- Calculate the percentage contribution of each pizza type to total revenue. --
 
 SELECT 
     pizza_types.category,
@@ -148,7 +149,7 @@ FROM
 GROUP BY pizza_types.category
 ORDER BY Revenue DESC;
 
--- Analyze the cumulative revenue generated over time --
+-- Analyze the cumulative revenue generated over time. --
 
 SELECT 
     order_date, sum(Revenue) over(order by order_date) cum_revenue
